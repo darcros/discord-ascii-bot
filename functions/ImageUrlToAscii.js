@@ -1,29 +1,19 @@
 const request = require('request');
-const stream = require('stream');
-// TODO: fix typo
-const getImageStreamInfo = require('./getImageStreamInfo');
+// const stream = require('stream');
 const calculateImageFit = require('./calculateAspectRatioFit');
 const imageToASCII = require('./imageStreamToAscii');
 
 // TODO: move into the immage command
-function urlAsciiImageConversion(url) {
+function urlAsciiImageConversion(url, width, height) {
   return new Promise((resolve, reject) => {
     // TODO: .get is unnecessary
     const imageStream = request.get(url);
     imageStream.on('error', reject);
 
-    // FIXME: find a more elegant way
-    const backupStream = new stream.PassThrough();
-    imageStream.pipe(backupStream);
-
-    getImageStreamInfo(imageStream)
-      .then((info) => {
-        const calculatedDimesions = calculateImageFit(info.width, info.height, 44, 44);
-
-        imageToASCII(backupStream, calculatedDimesions.width, calculatedDimesions.height, false)
-          .then(resolve)
-          .catch(reject);
-      })
+    // TODO: find better resize method that keeps in mind numer of chars not size
+    const { newWidth, newHeight } = calculateImageFit(width, height, 44, 44);
+    imageToASCII(imageStream, newWidth, newHeight, false)
+      .then(resolve)
       .catch(reject);
   });
 }
