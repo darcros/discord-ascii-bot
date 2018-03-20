@@ -9,7 +9,7 @@ module.exports = (client, message) => {
 
       // TODO: send error if none of the attachments were images
       if (attachment.width && attachment.height) {
-        // if (attachment.filename.endsWith('.gif')) return; // avoid gifs
+        if (attachment.filename.endsWith('.gif')) return; // avoid gifs
 
         // convert image
         // use 'proxyURL' instead of 'url' so the IP of the bot doesn't leak
