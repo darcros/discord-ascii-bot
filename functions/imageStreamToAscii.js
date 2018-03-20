@@ -16,12 +16,28 @@ function imageStreamToAscii(stream, width, heigth, cusotmChars) {
       .resize(width, heigth)
       // aspect ratio is ignored because the size passed in should be right
       .ignoreAspectRatio()
-      .toColorspace('srgb')
+      // make sure to use the right colorspace
+      // .toColorspace('srgb')
       .raw();
 
     // TODO: write shorter
     transformer.on('error', (err) => {
       reject(err);
+    });
+
+    transformer.on('info', (info) => {
+      const { channels } = info;
+
+      transformer.on('data', (chunk) => {
+        // +=3 because there are 3 channels (red, green, blue)
+        for (let i = 0; i < chunk.length; i += channels) {
+          // TODO: test custom charset
+          const a = channels === 4 ? chunk[1 + 3] : false;
+          console.log(a);
+          const char = getChar(chunk[i], chunk[i + 1], chunk[i + 2], a, false || cusotmChars);
+          ASCIIString += char;
+        }
+      });
     });
 
     // FIXME: if the dimesions are passed in the args there is no need to wait the event
@@ -41,14 +57,8 @@ function imageStreamToAscii(stream, width, heigth, cusotmChars) {
 
     stream
       .pipe(transformer)
-      .on('data', (chunk) => {
-        // +=3 because there are 3 channels (red, green, blue)
-        for (let i = 0; i < chunk.length; i += 3) {
-          // TODO: test custom charset
-          const char = getChar(chunk[i], chunk[i + 1], chunk[i + 2], false || cusotmChars);
-          ASCIIString += char;
-        }
-      });
+      // FIXME: find better way
+      .on('data', () => { });
   });
 }
 
