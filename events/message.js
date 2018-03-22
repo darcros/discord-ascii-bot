@@ -1,5 +1,3 @@
-const log = require('../functions/log.js');
-
 module.exports = (client, message) => {
   if (message.author.bot) return;
 
@@ -9,7 +7,6 @@ module.exports = (client, message) => {
   const regExp = new RegExp(`^(${client.config.prefix}|<@!?${client.user.id}>)`);
   const matches = regExp.exec(message.content);
   if (!matches) return;
-  log('info', `Matched message: '${message.content}'`);
 
   const args = message.content.slice(matches[0].length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
