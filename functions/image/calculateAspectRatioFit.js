@@ -1,4 +1,4 @@
-function calculateAspectRatioFit(srcWidth, srcHeight, maxWidth, maxHeight) {
+module.exports = (srcWidth, srcHeight, maxWidth, maxHeight) => {
   const ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
   return {
     newWidth: Math.round(srcWidth * ratio),
@@ -9,6 +9,4 @@ function calculateAspectRatioFit(srcWidth, srcHeight, maxWidth, maxHeight) {
     */
     newHeight: Math.round(srcHeight * ratio * (7 / 9))
   };
-}
-
-module.exports = calculateAspectRatioFit;
+};
