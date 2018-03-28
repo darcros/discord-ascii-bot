@@ -1,5 +1,5 @@
 // const defaultPixels = '%&#MHGw*+-. ';
-const { defaultPixels } = require('../config.json');
+const { defaultPixels } = require('../../config.json');
 
 // TODO: throw error on missing params
 // TODO: use default parameters for customPixels

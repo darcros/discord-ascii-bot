@@ -1,4 +1,4 @@
-const urlImageToAscii = require('../functions/ImageUrlToAscii');
+const urlImageToAscii = require('../functions/image/ImageUrlToAscii');
 
 module.exports = (client, message) => {
   message.attachments.forEach(() => {
