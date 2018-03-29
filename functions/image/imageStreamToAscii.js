@@ -45,7 +45,6 @@ module.exports = (stream, width, height, customChars) => new Promise((resolve, r
   transformer.on('end', () => {
     for (let i = width; i < ASCIIString.length; i += width + 1) {
       // add new lines at the specified width
-      // FIXME: splice is very expensive, maybe it's best to create a new string
       ASCIIString = `${ASCIIString.slice(0, i)}\n${ASCIIString.slice(i)}`;
     }
 
