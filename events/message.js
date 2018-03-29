@@ -1,3 +1,6 @@
+const parseArgs = require('../functions/argParser');
+const log = require('../functions/log');
+
 module.exports = (client, message) => {
   if (message.author.bot) return;
 
@@ -8,10 +11,14 @@ module.exports = (client, message) => {
   const matches = regExp.exec(message.content);
   if (!matches) return;
 
-  const args = message.content.slice(matches[0].length).trim().split(/ +/g);
-  const command = args.shift().toLowerCase();
+  const split = message.content.slice(matches[0].length).trim().split(/ +/g);
+  const command = split.shift().toLowerCase();
 
   if (client.commands.has(command)) {
-    client.commands.get(command)(client, message, args);
+    parseArgs(split)
+      .then((parsed) => {
+        client.commands.get(command)(client, message, parsed.string, parsed.args);
+      })
+      .catch(err => log('error', err));
   }
 };
