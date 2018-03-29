@@ -5,11 +5,11 @@ module.exports = (client, message) => {
     message.attachments.forEach((attachment) => {
       // if the attachment is an image
       // FIXME: check mime type and magic numbers to be sure it's an image
-      // event though magic numbers are probably alrteady checked by sharp
+      // event though magic numbers are probably already checked by sharp
 
       // TODO: send error if none of the attachments were images
       if (attachment.width && attachment.height) {
-        if (attachment.filename.endsWith('.gif')) return; // avoid gifs
+        if (attachment.filename.endsWith('.gif')) return; // avoid GIF files
 
         // convert image
         // use 'proxyURL' instead of 'url' so the IP of the bot doesn't leak

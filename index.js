@@ -15,7 +15,7 @@ client.commands.set('text', require('./commands/text'));
 const onReady = require('./events/ready.js');
 const onMessage = require('./events/message.js');
 
-// set event handlerts
+// set event handlers
 client.on('ready', () => onReady(client));
 client.on('message', message => onMessage(client, message));
 
