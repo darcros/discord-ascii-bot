@@ -1,10 +1,3 @@
-function input(name) {
-  return name.replace('_', ' ');
-}
+module.exports.in = name => name.replace('_', ' ');
 
-function output(name) {
-  return name.replace(' ', '_');
-}
-
-module.exports.in = input;
-module.exports.out = output;
+module.exports.out = name => name.replace(' ', '_');
