@@ -32,7 +32,6 @@ module.exports = (stream, width, height, customChars) => new Promise((resolve, r
     // +=3 because there are 3 channels (red, green, blue)
     for (let i = 0; i < chunk.length; i += 3) {
       // TODO: test custom charset
-      // TODO: before having all these variables it looked faster, do benchmark
       const r = chunk[i];
       const g = chunk[i + 1];
       const b = chunk[i + 2];
