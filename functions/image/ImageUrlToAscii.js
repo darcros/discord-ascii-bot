@@ -3,9 +3,7 @@ const request = require('request');
 const calculateImageFit = require('./calculateAspectRatioFit');
 const imageToASCII = require('./imageStreamToAscii');
 
-// TODO: move into the image command
 module.exports = (url, width, height) => new Promise((resolve, reject) => {
-  // TODO: .get is unnecessary
   const imageStream = request.get(url);
   imageStream.on('error', reject);
 

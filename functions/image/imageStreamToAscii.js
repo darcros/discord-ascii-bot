@@ -42,25 +42,16 @@ module.exports = (stream, width, height, customChars) => new Promise((resolve, r
     }
   });
 
-  // FIXME: if the dimensions are passed in the args there is no need to wait the event
-  // TODO: merge this event listener to the other one
-  transformer.on('info', (info) => {
-    // FIXME: having event listeners inside other event listeners is not a good idea
-    // the stream could end before calling info but it would cause an error anyway
-    transformer.on('end', () => {
-      for (let i = info.width; i < ASCIIString.length; i += info.width + 1) {
-        // add new lines at the specified width
-        // FIXME: splice is very expensive, maybe it's best to create a new string
-        ASCIIString = `${ASCIIString.slice(0, i)}\n${ASCIIString.slice(i)}`;
-      }
+  transformer.on('end', () => {
+    for (let i = width; i < ASCIIString.length; i += width + 1) {
+      // add new lines at the specified width
+      // FIXME: splice is very expensive, maybe it's best to create a new string
+      ASCIIString = `${ASCIIString.slice(0, i)}\n${ASCIIString.slice(i)}`;
+    }
 
-      resolve(ASCIIString);
-    });
+    resolve(ASCIIString);
   });
 
   stream
-    .pipe(transformer)
-  // consume the stream
-  // FIXME: the stream gets already consumed by transformer.on('data')
-    .on('data', () => { });
+    .pipe(transformer);
 });

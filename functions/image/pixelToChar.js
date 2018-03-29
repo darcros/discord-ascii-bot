@@ -2,8 +2,7 @@
 const { defaultPixels } = require('../../config.json');
 
 // TODO: throw error on missing params
-// TODO: use default parameters for customPixels
-module.exports = (r, g, b, customPixels) => { // TODO: move to different file
+module.exports = (r, g, b, customPixels) => {
   const pixels = customPixels || defaultPixels;
   const brightness = (0.2126 * r) + (0.7152 * g) + (0.0722 * b);
 
