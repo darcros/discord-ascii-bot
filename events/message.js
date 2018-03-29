@@ -1,5 +1,4 @@
-const parseArgs = require('../functions/argParser');
-const log = require('../functions/log');
+const minimist = require('minimist');
 
 module.exports = (client, message) => {
   if (message.author.bot) return;
@@ -15,10 +14,8 @@ module.exports = (client, message) => {
   const command = split.shift().toLowerCase();
 
   if (client.commands.has(command)) {
-    parseArgs(split)
-      .then((parsed) => {
-        client.commands.get(command)(client, message, parsed.string, parsed.args);
-      })
-      .catch(err => log('error', err));
+    const args = minimist(split);
+
+    client.commands.get(command)(client, message, args);
   }
 };
