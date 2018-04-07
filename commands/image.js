@@ -5,9 +5,6 @@ module.exports = (client, message) => {
 
   message.attachments.forEach((attachment) => {
     // if the attachment is an image
-    // FIXME: also check mime type to be sure it's an image
-
-    // TODO: send error if none of the attachments were images
     if (attachment.width && attachment.height) {
       foundImage = true;
 
@@ -24,7 +21,6 @@ module.exports = (client, message) => {
           // send result
           message.channel.send(ascii, { code: true });
         })
-        // TODO: inform user of the error
         .catch((err) => {
           message.reply('an unknown error occurred');
           client.log('error', err);
