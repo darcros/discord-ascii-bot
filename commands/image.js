@@ -1,8 +1,7 @@
 const urlImageToAscii = require('../functions/image/ImageUrlToAscii');
 
 // TODO: pass custom charset
-// TODO: pass custom output width and height
-module.exports = (client, message) => {
+module.exports = (client, message, args) => {
   let foundImage = false;
 
   message.attachments.forEach((attachment) => {
@@ -16,9 +15,18 @@ module.exports = (client, message) => {
         return;
       }
 
+      // get width and height
+      const customWidth = args.w || args.width;
+      const customHeight = args.h || args.height;
+
       // convert image
       // using 'proxyURL' instead of 'url' so the IP of the bot doesn't leak
-      urlImageToAscii(attachment.proxyURL, attachment.width, attachment.height)
+      urlImageToAscii(
+        attachment.proxyURL,
+        attachment.width, attachment.height,
+        customWidth, customHeight,
+        false
+      )
         .then((ascii) => {
           // send result
           message.channel.send(ascii, { code: true });
