@@ -7,6 +7,6 @@ module.exports = (srcWidth, srcHeight, maxWidth, maxHeight) => {
     window on my PC an the counted how pixel big were a the letters inside a code block
     TODO: allow custom ratio to be passed
     */
-    newHeight: Math.round(srcHeight * ratio * (7 / 9))
+    newHeight: Math.round(srcHeight * ratio * (7 / 11))
   };
 };
