@@ -2,6 +2,7 @@
 const { defaultPixels } = require('../../config.json');
 
 module.exports = (r, g, b, customPixels) => {
+  // TODO: decide if this is necessary or if it's it just bloating the function
   if (!r) throw new Error('r is required');
   if (!g) throw new Error('g is required');
   if (!b) throw new Error('b is required');

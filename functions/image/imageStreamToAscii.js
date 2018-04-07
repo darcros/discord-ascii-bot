@@ -2,6 +2,7 @@ const sharp = require('sharp');
 const getChar = require('./pixelToChar');
 
 module.exports = (stream, width, height, customChars) => new Promise((resolve, reject) => {
+  // TODO: decide if this is necessary or if it's it just bloating the function
   if (!stream) reject(new Error('stream is required'));
   if (!width) reject(new Error('width is required'));
   if (!height) reject(new Error('height is required'));
