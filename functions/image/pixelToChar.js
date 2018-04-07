@@ -3,9 +3,9 @@ const { defaultPixels } = require('../../config.json');
 
 module.exports = (r, g, b, customPixels) => {
   // TODO: decide if this is necessary or if it's it just bloating the function
-  if (!r) throw new Error('r is required');
-  if (!g) throw new Error('g is required');
-  if (!b) throw new Error('b is required');
+  if (r === undefined) throw new Error('r is required');
+  if (g === undefined) throw new Error('g is required');
+  if (b === undefined) throw new Error('b is required');
 
   const pixels = customPixels || defaultPixels;
   const brightness = (0.2126 * r) + (0.7152 * g) + (0.0722 * b);
