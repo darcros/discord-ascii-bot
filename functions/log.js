@@ -3,7 +3,7 @@
 const timestamp = require('time-stamp');
 
 module.exports = (level, message) => {
-  const time = timestamp('[HH:mm:ss]');
+  const time = timestamp('[YYYY-MM-DD HH:mm:ss]');
 
   switch (level) {
     case 'info':
