@@ -1,5 +1,7 @@
 const urlImageToAscii = require('../functions/image/ImageUrlToAscii');
 
+// TODO: pass custom charset
+// TODO: pass custom output width and height
 module.exports = (client, message) => {
   let foundImage = false;
 

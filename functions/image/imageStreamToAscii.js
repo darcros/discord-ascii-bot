@@ -1,14 +1,16 @@
 const sharp = require('sharp');
 const getChar = require('./pixelToChar');
 
-// TODO: throw error if missing params
-// TODO: pass custom charset
-// TODO: pass custom output width and height
 module.exports = (stream, width, height, customChars) => new Promise((resolve, reject) => {
+  if (!stream) reject(new Error('stream is required'));
+  if (!width) reject(new Error('width is required'));
+  if (!height) reject(new Error('height is required'));
+
   let ASCIIString = '';
 
   // create image processing pipeline with sharp
   // FIXME: create a pipeline and the use .clone() instead of creating a new instance every time
+  // TODO: benchmark if using .clone() would be faster
   const transformer = sharp()
     .resize(width, height)
     // ignore the aspect ratio because the size passed in should be right
