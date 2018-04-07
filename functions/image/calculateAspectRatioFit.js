@@ -1,12 +1,10 @@
-module.exports = (srcWidth, srcHeight, maxWidth, maxHeight) => {
+/*
+FIXME: find better proportion than 7 / 9
+*/
+module.exports = (srcWidth, srcHeight, maxWidth, maxHeight, heightMultiplier = 7 / 11) => {
   const ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
   return {
     newWidth: Math.round(srcWidth * ratio),
-    /*
-    FIXME: to find the 7 / 9 proportion i took a screenshot of the Discord
-    window on my PC an the counted how pixel big were a the letters inside a code block
-    TODO: allow custom ratio to be passed
-    */
-    newHeight: Math.round(srcHeight * ratio * (7 / 11))
+    newHeight: Math.round(srcHeight * ratio * heightMultiplier)
   };
 };
