@@ -1,3 +1,4 @@
+const stringArgv = require('string-argv');
 const minimist = require('minimist');
 
 module.exports = (client, message) => {
@@ -10,10 +11,12 @@ module.exports = (client, message) => {
   const matches = regExp.exec(message.content);
   if (!matches) return;
 
-  const split = message.content.slice(matches[0].length).trim().split(/ +/g);
+  const noPrefix = message.content.slice(matches[0].length);
+  const split = stringArgv(noPrefix);
   const command = split.shift().toLowerCase();
 
   if (client.commands.has(command)) {
+    // TODO: use aliases
     const args = minimist(split);
 
     client.commands.get(command)(client, message, args);
