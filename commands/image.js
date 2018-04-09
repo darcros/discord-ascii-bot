@@ -1,8 +1,20 @@
+const minimist = require('minimist');
+
 const urlImageToAscii = require('../functions/image/ImageUrlToAscii');
 
-// TODO: pass custom charset
+const parser = argString => minimist(argString, {
+  alias: {
+    height: 'h',
+    width: 'w',
+    // TODO: implement custom chars
+    charset: ['chars', 'c']
+  }
+});
+
 // TODO: send user error message on malformed args
-module.exports = (client, message, args) => {
+module.exports = (client, message, argString) => {
+  const args = parser(argString);
+
   let foundImage = false;
 
   message.attachments.forEach((attachment) => {
@@ -16,16 +28,12 @@ module.exports = (client, message, args) => {
         return;
       }
 
-      // get width and height
-      const customWidth = args.w || args.width;
-      const customHeight = args.h || args.height;
-
       // convert image
       // using 'proxyURL' instead of 'url' so the IP of the bot doesn't leak
       urlImageToAscii(
         attachment.proxyURL,
         attachment.width, attachment.height,
-        customWidth, customHeight,
+        args.width, args.height,
         false
       )
         .then((ascii) => {

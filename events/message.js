@@ -1,5 +1,4 @@
 const stringArgv = require('string-argv');
-const minimist = require('minimist');
 
 module.exports = (client, message) => {
   if (message.author.bot) return;
@@ -16,9 +15,6 @@ module.exports = (client, message) => {
   const command = split.shift().toLowerCase();
 
   if (client.commands.has(command)) {
-    // TODO: use aliases
-    const args = minimist(split);
-
-    client.commands.get(command)(client, message, args);
+    client.commands.get(command)(client, message, split);
   }
 };
