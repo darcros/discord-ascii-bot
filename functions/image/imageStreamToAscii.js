@@ -32,7 +32,6 @@ module.exports = (stream, width, height, customChars) => new Promise((resolve, r
   transformer.on('data', (chunk) => {
     // +=3 because there are 3 channels (red, green, blue)
     for (let i = 0; i < chunk.length; i += 3) {
-      // TODO: test custom charset
       const r = chunk[i];
       const g = chunk[i + 1];
       const b = chunk[i + 2];

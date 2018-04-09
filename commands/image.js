@@ -6,7 +6,6 @@ const parser = argString => minimist(argString, {
   alias: {
     height: 'h',
     width: 'w',
-    // TODO: implement custom chars
     charset: ['chars', 'c']
   }
 });
@@ -34,7 +33,7 @@ module.exports = (client, message, argString) => {
         attachment.proxyURL,
         attachment.width, attachment.height,
         args.width, args.height,
-        false
+        args.charset
       )
         .then((ascii) => {
           // send result
