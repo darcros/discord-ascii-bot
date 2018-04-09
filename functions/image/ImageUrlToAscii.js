@@ -1,4 +1,3 @@
-// TODO: use http module instead
 const request = require('request');
 const calculateImageFit = require('./calculateAspectRatioFit');
 const imageToASCII = require('./imageStreamToAscii');
