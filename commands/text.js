@@ -24,8 +24,11 @@ module.exports = (client, message, argString) => {
   const { kerning } = args;
 
   figlet(args._, { font, kerning }, (err, text) => {
-    // TODO: inform user on error
-    if (err) client.log('error', err);
+    if (err) {
+      message.reply('An unknown error occurred');
+      client.log('error', err);
+      return;
+    }
     message.channel.send(text, { code: true });
   });
 };
