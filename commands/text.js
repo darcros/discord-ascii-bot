@@ -6,7 +6,11 @@ const fontName = require('../functions/text/fontName');
 const parser = argString => minimist(argString, {
   alias: {
     font: 'f',
-    kerning: 'k'
+    kerning: 'k',
+    // TODO: make something similar to the fonts because there are spaces
+    // and wrapping the arguments in quotes is annoying
+    horizontalLayout: ['horizontal', 'hLayout', 'hl', 'h'],
+    verticalLayout: ['vertical', 'vLayout', 'vl', 'v']
   },
   string: ['chars'],
   default: {
@@ -16,14 +20,18 @@ const parser = argString => minimist(argString, {
 });
 
 // TODO: send user error message on malformed args
-// TODO: consider adding other figlet options
 module.exports = (client, message, argString) => {
   const args = parser(argString);
 
   const font = fontName.in(args.font);
-  const { kerning } = args;
+  const { kerning, horizontalLayout, verticalLayout } = args;
 
-  figlet(args._, { font, kerning }, (err, text) => {
+  figlet(args._, {
+    font,
+    kerning,
+    horizontalLayout,
+    verticalLayout
+  }, (err, text) => {
     if (err) {
       message.reply('An unknown error occurred');
       client.log('error', err);
