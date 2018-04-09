@@ -1,6 +1,7 @@
 const urlImageToAscii = require('../functions/image/ImageUrlToAscii');
 
 // TODO: pass custom charset
+// TODO: send user error message on malformed args
 module.exports = (client, message, args) => {
   let foundImage = false;
 
