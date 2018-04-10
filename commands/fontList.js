@@ -9,9 +9,6 @@ const list = figlet.fontsSync().map(fontName.out);
 const parser = argString => minimist(argString, {
   alias: {
     search: ['s', 'string', 'searchString', 'stringSearch']
-  },
-  default: {
-    search: ''
   }
 });
 
@@ -21,9 +18,11 @@ module.exports = (client, message, argString) => {
   if (message.channel.type !== 'dm') message.reply('sending the list in your DMs.');
 
   // prepare the message to send
-  const msg = list
-    .filter(elem => elem.toLowerCase().includes(args.search.toLowerCase()))
-    .reduce((prev, next) => `${prev}, ${next}`);
+  let msg = list;
+  if (args.search) {
+    msg = msg.filter(elem => elem.toLowerCase().includes(args.search.toLowerCase()));
+  }
+  msg = msg.reduce((prev, next) => `${prev}, ${next}`);
 
   // send with split enabled
   message.author.send(msg, {
