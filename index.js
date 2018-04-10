@@ -10,6 +10,7 @@ client.commands = new Discord.Collection();
 client.commands.set('ping', require('./commands/ping'));
 client.commands.set('image', require('./commands/image'));
 client.commands.set('text', require('./commands/text'));
+client.commands.set('fontList'.toLowerCase(), require('./commands/fontList'));
 
 // import event handlers
 const onReady = require('./events/ready.js');
