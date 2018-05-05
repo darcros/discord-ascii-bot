@@ -1,4 +1,5 @@
 const minimist = require('minimist');
+const Joi = require('joi');
 const figlet = require('figlet');
 
 const fontName = require('../functions/text/fontName');
@@ -12,10 +13,21 @@ const parser = argString => minimist(argString, {
   }
 });
 
+const validator = args => Joi.validate(args, {
+  search: Joi.string()
+}, {
+  allowUnknown: true // ignore aliases and args._
+});
+
 module.exports = (client, message, argString) => {
   const args = parser(argString);
+  const { error } = validator(args);
+  if (error) {
+    message.reply(error.details[0].message);
+    return;
+  }
 
-  if (message.channel.type !== 'dm') message.reply('sending the list in your DMs.');
+  if (message.channel.type !== 'dm') message.reply('Sending the list in your DMs.');
 
   // prepare the message to send
   let msg = list;
