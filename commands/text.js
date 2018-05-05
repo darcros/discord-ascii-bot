@@ -13,7 +13,6 @@ const parser = argString => minimist(argString, {
     horizontalLayout: ['horizontal', 'hLayout', 'hl', 'h'],
     verticalLayout: ['vertical', 'vLayout', 'vl', 'v']
   },
-  string: ['chars'], // TODO: implement chars
   default: {
     font: 'standard',
     kerning: 'default'
