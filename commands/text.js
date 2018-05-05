@@ -21,7 +21,7 @@ const parser = argString => minimist(argString, {
 });
 
 const validator = args => Joi.validate(args, {
-  font: Joi.string(), // TODO: only allow fonts that exist
+  font: Joi.string(),
   kerning: Joi.string().valid('default', 'fitted', 'full'), // NOTE: empty strings are disallowed by default
   horizontalLayout: Joi.string().valid('default', 'full', 'fitted', 'controlled smushing', 'universal smushing'),
   verticalLayout: Joi.string().valid('default', 'full', 'fitted', 'controlled smushing', 'universal smushing'),
@@ -48,9 +48,12 @@ module.exports = (client, message, argString) => {
     verticalLayout
   }, (err, text) => {
     if (err) {
-      // TODO: send different error message if the font was not found
-      message.reply('An unknown error occurred');
-      client.log('error', err);
+      if (err.code === 'ENOENT') {
+        message.reply(`The font "${font}" does not exist.\nUse the "fontList" command to get a list of available fonts.`);
+      } else {
+        message.reply('An unknown error occurred');
+        client.log('error', err);
+      }
       return;
     }
     message.channel.send(text, { code: true });
