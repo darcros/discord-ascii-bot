@@ -30,12 +30,16 @@ module.exports = (client, message, argString) => {
   if (message.channel.type !== 'dm') message.reply('Sending the list in your DMs.');
 
   // prepare the message to send
-  let msg = list;
+  let results = list;
   if (args.search) {
-    msg = msg.filter(elem => elem.toLowerCase().includes(args.search.toLowerCase()));
+    results = results.filter(elem => elem.toLowerCase().includes(args.search.toLowerCase()));
   }
-  msg = msg.reduce((prev, next) => `${prev}, ${next}`);
+  if (results.length === 0) {
+    message.reply('No results');
+    return;
+  }
 
+  const msg = results.reduce((prev, next) => `${prev}, ${next}`);
   // send with split enabled
   message.author.send(msg, {
     split: {
