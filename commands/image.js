@@ -14,7 +14,7 @@ const parser = argString => minimist(argString, {
 const validator = args => Joi.validate(args, {
   height: Joi.number().integer().min(1),
   width: Joi.number().integer().min(1),
-  charset: Joi.string().min(1)
+  charset: Joi.string() // NOTE: empty strings are disallowed by default
 }, {
   allowUnknown: true // ignore aliases and args._
 });
