@@ -22,6 +22,8 @@ module.exports = (
   const finalWidth = customWidth || newWidth;
   const finalHeight = customHeight || newHeight;
 
+  if (finalWidth * finalHeight > 2000) reject(new Error('Too big'));
+
   imageToASCII(imageStream, finalWidth, finalHeight, customChars)
     .then(resolve)
     .catch(reject);
