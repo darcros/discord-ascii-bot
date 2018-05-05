@@ -9,6 +9,10 @@ module.exports = (
   customWidth, customHeight,
   customChars
 ) => new Promise((resolve, reject) => {
+  if (!url) throw new Error('Url is required');
+  if (!realWidth) throw new Error('realWidth is required');
+  if (!realHeight) throw new Error('realHeight is required');
+
   const imageStream = request.get(url);
   imageStream.on('error', reject);
 
