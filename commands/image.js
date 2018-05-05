@@ -1,4 +1,5 @@
 const minimist = require('minimist');
+const Joi = require('joi');
 
 const urlImageToAscii = require('../functions/image/ImageUrlToAscii');
 
@@ -10,9 +11,21 @@ const parser = argString => minimist(argString, {
   }
 });
 
-// TODO: send user error message on malformed args
+const validator = args => Joi.validate(args, {
+  height: Joi.number().integer().min(1),
+  width: Joi.number().integer().min(1),
+  charset: Joi.string().min(1)
+}, {
+  allowUnknown: true // ignore aliases and args._
+});
+
 module.exports = (client, message, argString) => {
   const args = parser(argString);
+  const { error } = validator(args);
+  if (error) {
+    message.reply(error.details[0].message);
+    return;
+  }
 
   let foundImage = false;
 
