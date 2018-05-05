@@ -8,9 +8,14 @@ module.exports = (client, message) => {
   // FIXME: possible regExp DoS, however this stuff is controlled by the bot owner so no big deal
   const regExp = new RegExp(`^(${client.config.prefix}|<@!?${client.user.id}>)`);
   const matches = regExp.exec(message.content);
-  if (!matches) return;
 
-  const noPrefix = message.content.slice(matches[0].length);
+  let noPrefix = '';
+  if (matches) {
+    noPrefix = message.content.slice(matches[0].length);
+  } else if (!matches && message.channel.type === 'dm') {
+    noPrefix = message.content;
+  } else return;
+
   const split = stringArgv(noPrefix);
   const command = split.shift().toLowerCase();
 
