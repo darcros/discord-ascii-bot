@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "discord.js": "^11.3.0",
+    "dotenv": "^5.0.1",
     "figlet": "^1.2.0",
     "joi": "^13.2.0",
     "minimist": "^1.2.0",

@@ -1,5 +1,5 @@
 // const defaultPixels = '%&#MHGw*+-. ';
-const { defaultPixels } = require('../../config.json');
+const { defaultPixels } = require('../../config');
 
 module.exports = (r, g, b, customPixels) => {
   const pixels = customPixels || defaultPixels;
