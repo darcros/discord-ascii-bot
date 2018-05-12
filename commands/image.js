@@ -61,9 +61,9 @@ module.exports = (client, message, argString) => {
         })
         .catch((err) => {
           if (err.message === 'Too big') {
-            message.reply('The dimensions you specified are too big.\nThe maximum size of a Discord message is 2000 characters.');
+            message.reply('the dimensions you specified are too big.\nThe maximum size of a Discord message is 2000 characters.');
           } else {
-            message.reply('An unknown error occurred');
+            message.reply('an unknown error occurred');
             client.log('error', err);
           }
         });

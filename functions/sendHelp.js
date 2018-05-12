@@ -13,6 +13,6 @@ module.exports = (message, cmdName, type) => {
       break;
 
     default:
-      message.reply(`Help: ${url}`);
+      message.reply(`help: ${url}`);
   }
 };

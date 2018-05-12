@@ -34,7 +34,7 @@ module.exports = (client, message, argString) => {
     return;
   }
 
-  if (message.channel.type !== 'dm') message.reply('Sending the list in your DMs.');
+  if (message.channel.type !== 'dm') message.reply('sending the list in your DMs.');
 
   // prepare the message to send
   let results = list;
@@ -42,7 +42,7 @@ module.exports = (client, message, argString) => {
     results = results.filter(elem => elem.toLowerCase().includes(args.search.toLowerCase()));
   }
   if (results.length === 0) {
-    message.reply('No results');
+    message.reply('no results');
     return;
   }
 

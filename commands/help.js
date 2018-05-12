@@ -15,7 +15,7 @@ const validator = args => Joi.validate(args, {
 
 const { docsUrl } = require('../config');
 
-const sendDefaultHelp = message => message.reply(`You can find help about all the commands here: ${docsUrl}.\nYou can also try \`help <commandName>\` to get a link to a specific command.`);
+const sendDefaultHelp = message => message.reply(`you can find help about all the commands here: ${docsUrl}.\nYou can also try \`help <commandName>\` to get a link to a specific command.`);
 
 module.exports = (client, message, argString) => {
   const args = parser(argString);
@@ -33,6 +33,6 @@ module.exports = (client, message, argString) => {
   if (client.commands.has(command)) {
     sendHelp(message, command, 'helpCommand');
   } else {
-    message.reply('Command not found');
+    message.reply('command not found');
   }
 };
