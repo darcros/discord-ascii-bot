@@ -2,6 +2,7 @@ const minimist = require('minimist');
 const Joi = require('joi');
 const figlet = require('figlet');
 
+const sendHelp = require('../functions/sendHelp');
 const fontName = require('../functions/text/fontName');
 
 const parser = argString => minimist(argString, {
@@ -16,7 +17,8 @@ const parser = argString => minimist(argString, {
   default: {
     font: 'standard',
     kerning: 'default'
-  }
+  },
+  boolean: ['help']
 });
 
 const validator = args => Joi.validate(args, {
@@ -24,7 +26,8 @@ const validator = args => Joi.validate(args, {
   kerning: Joi.string().valid('default', 'fitted', 'full'), // NOTE: empty strings are disallowed by default
   horizontalLayout: Joi.string().valid('default', 'full', 'fitted', 'controlled smushing', 'universal smushing'),
   verticalLayout: Joi.string().valid('default', 'full', 'fitted', 'controlled smushing', 'universal smushing'),
-  chars: Joi.string()
+  chars: Joi.string(),
+  help: Joi.boolean()
 }, {
   allowUnknown: true // ignore aliases and args._
 });
@@ -34,6 +37,10 @@ module.exports = (client, message, argString) => {
   const { error } = validator(args);
   if (error) {
     message.reply(error.details[0].message);
+    return;
+  }
+  if (args.help) {
+    sendHelp(message, 'text', 'inlineOption');
     return;
   }
 

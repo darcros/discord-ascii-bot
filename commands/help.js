@@ -1,15 +1,37 @@
-module.exports = (client, message, argString) => {
-  const { docsUrl } = client.config;
+const minimist = require('minimist');
+const Joi = require('joi');
 
-  if (argString.length === 0) {
-    message.reply(`You can find help about the commands here: ${docsUrl}.\nYou can also try \`help <commandName>\` to get a  link to the exact section.`);
+const sendHelp = require('../functions/sendHelp');
+
+const parser = argString => minimist(argString, {
+  boolean: ['help']
+});
+
+const validator = args => Joi.validate(args, {
+  help: Joi.boolean()
+}, {
+  allowUnknown: true // ignore aliases and args._
+});
+
+const { docsUrl } = require('../config');
+
+const sendDefaultHelp = message => message.reply(`You can find help about all the commands here: ${docsUrl}.\nYou can also try \`help <commandName>\` to get a link to a specific command.`);
+
+module.exports = (client, message, argString) => {
+  const args = parser(argString);
+  const { error } = validator(args);
+  if (error) {
+    message.reply(error.details[0].message);
+    return;
+  }
+  if (args.help || argString.length === 0) {
+    sendDefaultHelp();
     return;
   }
 
   const command = argString[0].trim().toLowerCase();
   if (client.commands.has(command)) {
-    // if (message.channel.type !== 'dm') message.reply('Sending help in your DMs.');
-    message.reply(`You can  find help about that command here: ${docsUrl}#${command}`);
+    sendHelp(message, command, 'helpCommand');
   } else {
     message.reply('Command not found');
   }

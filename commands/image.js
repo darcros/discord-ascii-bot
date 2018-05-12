@@ -1,6 +1,7 @@
 const minimist = require('minimist');
 const Joi = require('joi');
 
+const sendHelp = require('../functions/sendHelp');
 const urlImageToAscii = require('../functions/image/ImageUrlToAscii');
 
 const parser = argString => minimist(argString, {
@@ -8,13 +9,15 @@ const parser = argString => minimist(argString, {
     height: 'h',
     width: 'w',
     charset: ['chars', 'c']
-  }
+  },
+  boolean: ['help']
 });
 
 const validator = args => Joi.validate(args, {
   height: Joi.number().integer().min(1),
   width: Joi.number().integer().min(1),
-  charset: Joi.string() // NOTE: empty strings are disallowed by default
+  charset: Joi.string(), // NOTE: empty strings are disallowed by default
+  help: Joi.boolean()
 }, {
   allowUnknown: true // ignore aliases and args._
 });
@@ -24,6 +27,10 @@ module.exports = (client, message, argString) => {
   const { error } = validator(args);
   if (error) {
     message.reply(error.details[0].message);
+    return;
+  }
+  if (args.help) {
+    sendHelp(message, 'image', 'inlineOption');
     return;
   }
 
