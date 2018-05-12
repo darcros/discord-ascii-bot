@@ -193,7 +193,7 @@ In order to not spam the chat the list will be sent in your DMs.
   ```
 
   ```txt
-    user > ASCII fontList -search 3D
+    user > ASCII fontList --search 3D
     ASCII> 3D_Diagonal, 3D-ASCII, Henry_3D,
            Larry_3D 2, Larry_3D
   ```
