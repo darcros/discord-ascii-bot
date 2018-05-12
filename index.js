@@ -7,6 +7,7 @@ client.log = require('./functions/log.js');
 client.commands = new Discord.Collection();
 
 // set commands
+client.commands.set('help', require('./commands/help'));
 client.commands.set('ping', require('./commands/ping'));
 client.commands.set('image', require('./commands/image'));
 client.commands.set('text', require('./commands/text'));
