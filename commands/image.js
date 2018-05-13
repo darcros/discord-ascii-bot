@@ -70,5 +70,5 @@ module.exports = (client, message, argString) => {
     }
   });
 
-  if (!foundImage) message.reply('you must attach an image to you message.');
+  if (!foundImage) message.reply('you must attach an image to your message.');
 };
