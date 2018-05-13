@@ -57,6 +57,7 @@ module.exports = (client, message, argString) => {
       )
         .then((ascii) => {
           // send result
+          // FIXME: if somehow the message is bigger than 2000 chars this throws an error
           message.channel.send(ascii, { code: true });
         })
         .catch((err) => {
@@ -64,7 +65,7 @@ module.exports = (client, message, argString) => {
             message.reply('the dimensions you specified are too big.\nThe maximum size of a Discord message is 2000 characters.');
           } else {
             message.reply('an unknown error occurred');
-            client.log('error', err);
+            client.logger.error('Could not convert the URL to ascii', err);
           }
         });
     }

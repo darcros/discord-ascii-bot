@@ -4,6 +4,8 @@ if (!process.env.TOKEN) throw new Error('The bot token must be set in the .env f
 
 module.exports = {
   token: process.env.TOKEN,
+  logLevel: process.env.DEBUG_LEVEL || 'debug',
+  logDir: './log',
   prefix: process.env.PREFIX || 'ASCII',
   defaultPixels: process.env.DEF_PIXELS || '%&#MHGw*+-. ',
   docsUrl: 'https://github.com/7ixi0/discord-ascii-bot/blob/master/help.md',

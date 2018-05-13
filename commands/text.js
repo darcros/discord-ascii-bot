@@ -58,10 +58,11 @@ module.exports = (client, message, argString) => {
         message.reply(`the font "${font}" does not exist.\nUse the "fonts" command to get a list of available fonts.`);
       } else {
         message.reply('an unknown error occurred');
-        client.log('error', err);
+        client.logger.error('Could not render figlet text', err);
       }
       return;
     }
+    // FIXME: if somehow the message is bigger than 2000 chars this throws an error
     message.channel.send(text, { code: true });
   });
 };
