@@ -16,7 +16,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://bitbucket.org/7ixi0/discord-asciibot.git"
+    "url": "https://github.com/7ixi0/discord-ascii-bot.git"
   },
   "dependencies": {
     "discord.js": "^11.3.0",
