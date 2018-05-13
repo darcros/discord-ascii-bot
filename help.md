@@ -9,6 +9,7 @@
     - [Positioning](#positioning)
   - [Commands](#commands)
     - [ping](#ping)
+    - [info](#info)
     - [image](#image)
     - [text](#text)
     - [fonts](#fonts)
@@ -67,6 +68,29 @@ Responds with `PONG!` and the bot latency in milliseconds (ms).
   ```txt
     user > ASCII ping
     ASCII> Pong! Latency is 641ms. API Latency is 127ms
+  ```
+
+### info
+
+**Description**:
+Responds with info about the bot, such as uptime, servers the bot is in and invites.
+
+**Usage**:
+  `ASCII info`
+
+**Options**:
+
+- Like any other command you can use the `--help` flag to get help about this command.
+
+**Example**:
+
+  ```txt
+    user > ASCII info
+    ASCII> **ASCII info**
+           > Uptime: 10min
+           > Servers: 69
+           > Bot invite: discordapp.com/...
+           > Support server: discordapp.com/...
   ```
 
 ### image

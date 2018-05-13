@@ -9,6 +9,7 @@ client.commands = new Discord.Collection();
 // set commands
 client.commands.set('help', require('./commands/help'));
 client.commands.set('ping', require('./commands/ping'));
+client.commands.set('info', require('./commands/info'));
 client.commands.set('image', require('./commands/image'));
 client.commands.set('text', require('./commands/text'));
 client.commands.set('fonts', require('./commands/fonts'));
