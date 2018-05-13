@@ -11,7 +11,7 @@
     - [ping](#ping)
     - [image](#image)
     - [text](#text)
-    - [fontList](#fontlist)
+    - [fonts](#fonts)
     - [help](#help)
 
 ## Command syntax
@@ -128,7 +128,7 @@ Converts the text to ASCII art using FIGlet.
 
 - `--font`, `-f`
 
-  Must be a font name, you can get a list using the [fontList](#fontlist) command.
+  Must be a font name, you can get a list using the [fonts](#fonts) command.
   Specifies in which font to render your text.
   Default = "standard"
 
@@ -175,14 +175,14 @@ Converts the text to ASCII art using FIGlet.
             `------'      `-----'      `-----' '--'
   ```
 
-### fontList
+### fonts
 
 **Description**:
 Responds with a list of fonts.
 In order to not spam the chat the list will be sent in your DMs.
 
 **Usage**:
-  `ASCII fontList [options]`
+  `ASCII fonts [options]`
 
 **Options**:
 
@@ -196,13 +196,13 @@ In order to not spam the chat the list will be sent in your DMs.
 **Example**:
 
   ```txt
-    user > ASCII fontList
+    user > ASCII fonts
     ASCII> 1Row, 3-D, 3D_Diagonal, 3D-ASCII, 3x5,
            4Max, 5_Line Oblique, Acrobatic ...
   ```
 
   ```txt
-    user > ASCII fontList --search 3D
+    user > ASCII fonts --search 3D
     ASCII> 3D_Diagonal, 3D-ASCII, Henry_3D,
            Larry_3D 2, Larry_3D
   ```

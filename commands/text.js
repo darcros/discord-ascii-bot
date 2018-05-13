@@ -55,7 +55,7 @@ module.exports = (client, message, argString) => {
   }, (err, text) => {
     if (err) {
       if (err.code === 'ENOENT') {
-        message.reply(`the font "${font}" does not exist.\nUse the "fontList" command to get a list of available fonts.`);
+        message.reply(`the font "${font}" does not exist.\nUse the "fonts" command to get a list of available fonts.`);
       } else {
         message.reply('an unknown error occurred');
         client.log('error', err);

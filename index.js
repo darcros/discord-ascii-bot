@@ -11,7 +11,7 @@ client.commands.set('help', require('./commands/help'));
 client.commands.set('ping', require('./commands/ping'));
 client.commands.set('image', require('./commands/image'));
 client.commands.set('text', require('./commands/text'));
-client.commands.set('fontList'.toLowerCase(), require('./commands/fontList'));
+client.commands.set('fonts', require('./commands/fonts'));
 
 // import event handlers
 const onReady = require('./events/ready.js');
