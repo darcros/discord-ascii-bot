@@ -25,7 +25,7 @@ module.exports = (client, message, argString) => {
     return;
   }
   if (args.help || argString.length === 0) {
-    sendDefaultHelp();
+    sendDefaultHelp(message);
     return;
   }
 
