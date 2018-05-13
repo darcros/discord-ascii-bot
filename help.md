@@ -16,7 +16,7 @@
 
 ## Command syntax
 
-To trigger a command send a message that starts with  a mention to the bot or with `ASCII`, for example:
+To trigger a command send a message that starts with a mention to the bot or with `ASCII`, for example:
 
 - `@ASCII#9369 <command> [options]`
 - `ASCII <command> [options]`
@@ -24,6 +24,8 @@ To trigger a command send a message that starts with  a mention to the bot or wi
 ## Options syntax
 
 The options syntax is similar to the syntax of linux commands.
+
+**NOTE**: every command has a `--help` option that can be used to get help about that command.
 
 ### Option types
 
@@ -57,7 +59,8 @@ Responds with `PONG!` and the bot latency in milliseconds (ms).
   `ASCII ping`
 
 **Options**:
-  none
+
+- Like any other command you can use the `--help` flag to get help about this command.
 
 **Example**:
 
@@ -98,6 +101,8 @@ Converts all images attached to the message into ASCII art.
   Specifies which character to use, from darkest lo lightest.
   More characters = more brightness levels = better results.
   Default = "%&#MHGw*+-. "
+
+- Like any other command you can use the `--help` flag to get help about this command.
 
 **Example**:
 
@@ -144,6 +149,8 @@ Converts the text to ASCII art using FIGlet.
   Specifies which vertical layout to use.
   Default = "default"
 
+- Like any other command you can use the `--help` flag to get help about this command.
+
 **Example**:
 
   ```txt
@@ -184,6 +191,8 @@ In order to not spam the chat the list will be sent in your DMs.
   Must be a string.
   The string to search in the font names, case insensitive.
 
+- Like any other command you can use the `--help` flag to get help about this command.
+
 **Example**:
 
   ```txt
@@ -200,4 +209,29 @@ In order to not spam the chat the list will be sent in your DMs.
 
 ### help
 
-To be implemented
+**Description**:
+Sends help for the bot commands (send links to this file).
+
+**Usage**
+  `ASCII help [command name]`
+
+**Options**:
+
+- You can add a command name (as shown in the example) to get the link to the section of the command you specified.
+
+- Like any other command you can use the `--help` flag to get help about this command (even though it would be quite useless to use it here).
+
+**Example**:
+
+```txt
+  user > ASCII help
+  ASCII> @user#0000, you can find help about all the commands here:
+         https://github.com/7ixi0/discord-ascii-bot/blob/master/help.md.
+         You can also try `help <commandName>` to get a link to a specific command.
+```
+
+```txt
+  user > ASCII help image
+  ASCII> @user#0000, you can find help about that command here:
+         https://github.com/7ixi0/discord-ascii-bot/blob/master/help.md#image
+```
