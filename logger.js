@@ -1,5 +1,3 @@
-/* eslint no-console:0 */
-
 const fs = require('fs');
 
 const winston = require('winston');
