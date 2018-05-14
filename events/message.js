@@ -20,6 +20,7 @@ module.exports = (client, message) => {
   const command = split.shift().toLowerCase();
 
   if (client.commands.has(command)) {
+    client.logger.debug('executing command', command);
     client.commands.get(command)(client, message, split);
   }
 };

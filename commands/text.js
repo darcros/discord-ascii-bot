@@ -46,13 +46,22 @@ module.exports = (client, message, argString) => {
 
   const font = fontName.in(args.font);
   const { kerning, horizontalLayout, verticalLayout } = args;
+  const text = args._.join(' ');
 
-  figlet(args._.join(' '), {
+  client.logger.debug('rendering text', {
+    text,
     font,
     kerning,
     horizontalLayout,
     verticalLayout
-  }, (err, text) => {
+  });
+
+  figlet(text, {
+    font,
+    kerning,
+    horizontalLayout,
+    verticalLayout
+  }, (err, rendered) => {
     if (err) {
       if (err.code === 'ENOENT') {
         message.reply(`the font "${font}" does not exist.\nUse the "fonts" command to get a list of available fonts.`);
@@ -62,7 +71,12 @@ module.exports = (client, message, argString) => {
       }
       return;
     }
+
+    client.logger.debug('rendered text', {
+      length: rendered.length
+    });
+
     // FIXME: if somehow the message is bigger than 2000 chars this throws an error
-    message.channel.send(text, { code: true });
+    message.channel.send(rendered, { code: true });
   });
 };

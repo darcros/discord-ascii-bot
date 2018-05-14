@@ -4,9 +4,13 @@ const client = new Discord.Client();
 client.config = require('./config');
 client.logger = require('./logger.js');
 
+client.logger.info('Bot starting...');
+
 client.commands = new Discord.Collection();
 
 // set commands
+client.logger.verbose('loading commands...');
+
 client.commands.set('help', require('./commands/help'));
 client.commands.set('ping', require('./commands/ping'));
 client.commands.set('info', require('./commands/info'));
@@ -25,7 +29,7 @@ client.on('message', message => onMessage(client, message));
 // log events
 // TODO: move event handlers in separate files
 client
-  // .on('debug', info => client.logger.info(info))
+  .on('debug', info => client.logger.silly(info))
   .on('warn', warning => client.logger.warning(warning))
   .on('error', err => client.logger.error('Discord client error', err))
   .on('disconnect', () => client.logger.warn('Bot disconnected!'))
@@ -33,4 +37,4 @@ client
 
 // start the bot
 client.login(client.config.token);
-client.logger.info('Bot starting...');
+client.logger.verbose('Logging in...');

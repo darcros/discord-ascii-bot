@@ -47,6 +47,15 @@ module.exports = (client, message, argString) => {
         return;
       }
 
+      client.logger.debug('rendering image', {
+        url: attachment.proxyURL,
+        originalWidth: attachment.width,
+        originalHeight: attachment.height,
+        customWidth: args.width,
+        customHeight: args.height,
+        customCharset: args.charset
+      });
+
       // convert image
       // using 'proxyURL' instead of 'url' so the IP of the bot doesn't leak
       urlImageToAscii(
@@ -56,6 +65,10 @@ module.exports = (client, message, argString) => {
         args.charset
       )
         .then((ascii) => {
+          client.logger.debug('rendered image', {
+            length: ascii.length
+          });
+
           // send result
           // FIXME: if somehow the message is bigger than 2000 chars this throws an error
           message.channel.send(ascii, { code: true });

@@ -46,6 +46,11 @@ module.exports = (client, message, argString) => {
     return;
   }
 
+  client.logger.debug('font search done', {
+    query: args.search,
+    results: results.length
+  });
+
   const msg = results.reduce((prev, next) => `${prev}, ${next}`);
   // send with split enabled
   message.author.send(msg, {
