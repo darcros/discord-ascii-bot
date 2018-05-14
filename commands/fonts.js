@@ -22,6 +22,16 @@ const validator = args => Joi.validate(args, {
   allowUnknown: true // ignore aliases and args._
 });
 
+const headerTemplate = (search) => {
+  if (!search) {
+    return '=========\n*FONT LIST*\n=========\n';
+  }
+
+  const text = `*RESULTS FOR: "${search}"*\n`;
+  const line = '='.repeat(text.length - 2).concat('\n');
+  return line + text + line;
+};
+
 module.exports = (client, message, argString) => {
   const args = parser(argString);
   const { error } = validator(args);
@@ -55,7 +65,7 @@ module.exports = (client, message, argString) => {
 
   const msg = results.reduce((prev, next) => `${prev}, ${next}`);
   // send with split enabled
-  message.author.send(msg, {
+  message.author.send(headerTemplate(args.search) + msg, {
     split: {
       char: ', ',
     }
