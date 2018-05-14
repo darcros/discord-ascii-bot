@@ -34,6 +34,8 @@ module.exports = (client, message, argString) => {
     return;
   }
 
+  const timer = client.logger.startTimer();
+
   if (message.channel.type !== 'dm') message.reply('sending the list in your DMs.');
 
   // prepare the message to send
@@ -46,7 +48,7 @@ module.exports = (client, message, argString) => {
     return;
   }
 
-  client.logger.debug('font search done', {
+  timer.done('fonts command', {
     query: args.search,
     results: results.length
   });

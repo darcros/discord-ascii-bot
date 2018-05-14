@@ -49,17 +49,11 @@ module.exports = (client, message, argString) => {
     return;
   }
 
+  const timer = client.logger.startTimer();
+
   const font = fontName.in(args.font);
   const { kerning, horizontalLayout, verticalLayout } = args;
   const text = args._.join(' ');
-
-  client.logger.debug('rendering text', {
-    text,
-    font,
-    kerning,
-    horizontalLayout,
-    verticalLayout
-  });
 
   figlet(text, {
     font,
@@ -77,7 +71,12 @@ module.exports = (client, message, argString) => {
       return;
     }
 
-    client.logger.debug('rendered text', {
+    timer.done('text command', {
+      text,
+      font,
+      kerning,
+      horizontalLayout,
+      verticalLayout,
       length: rendered.length
     });
 

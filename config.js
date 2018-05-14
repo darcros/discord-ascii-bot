@@ -4,7 +4,7 @@ if (!process.env.TOKEN) throw new Error('The bot token must be set in the .env f
 
 module.exports = {
   token: process.env.TOKEN,
-  logLevel: process.env.DEBUG_LEVEL || 'debug',
+  logLevel: process.env.DEBUG_LEVEL || 'info',
   logDir: './log',
   prefix: process.env.PREFIX || 'ASCII',
   defaultPixels: process.env.DEF_PIXELS || '%&#MHGw*+-. ',

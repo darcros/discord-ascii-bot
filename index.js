@@ -29,7 +29,7 @@ client.on('message', message => onMessage(client, message));
 // log events
 // TODO: move event handlers in separate files
 client
-  .on('debug', info => client.logger.silly(info))
+  .on('debug', info => client.logger.debug(info))
   .on('warn', warning => client.logger.warning(warning))
   .on('error', err => client.logger.error('Discord client error', err))
   .on('disconnect', () => client.logger.warn('Bot disconnected!'))

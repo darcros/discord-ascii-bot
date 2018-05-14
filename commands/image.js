@@ -47,14 +47,7 @@ module.exports = (client, message, argString) => {
         return;
       }
 
-      client.logger.debug('rendering image', {
-        url: attachment.proxyURL,
-        originalWidth: attachment.width,
-        originalHeight: attachment.height,
-        customWidth: args.width,
-        customHeight: args.height,
-        customCharset: args.charset
-      });
+      const timer = client.logger.startTimer();
 
       // convert image
       // using 'proxyURL' instead of 'url' so the IP of the bot doesn't leak
@@ -65,7 +58,13 @@ module.exports = (client, message, argString) => {
         args.charset
       )
         .then((ascii) => {
-          client.logger.debug('rendered image', {
+          timer.done('image command', {
+            url: attachment.proxyURL,
+            originalWidth: attachment.width,
+            originalHeight: attachment.height,
+            customWidth: args.width,
+            customHeight: args.height,
+            customCharset: args.charset,
             length: ascii.length
           });
 
@@ -73,6 +72,7 @@ module.exports = (client, message, argString) => {
             message.reply('the rendered ASCII art is too big.\nThe maximum size of a Discord message is 2000 characters.');
             return;
           }
+
           // send result
           message.channel.send(ascii, { code: true });
         })
