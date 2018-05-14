@@ -69,8 +69,11 @@ module.exports = (client, message, argString) => {
             length: ascii.length
           });
 
+          if (ascii.length > 2000) {
+            message.reply('the rendered ASCII art is too big.\nThe maximum size of a Discord message is 2000 characters.');
+            return;
+          }
           // send result
-          // FIXME: if somehow the message is bigger than 2000 chars this throws an error
           message.channel.send(ascii, { code: true });
         })
         .catch((err) => {
