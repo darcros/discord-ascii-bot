@@ -47,7 +47,7 @@ module.exports = (client, message, argString) => {
   const font = fontName.in(args.font);
   const { kerning, horizontalLayout, verticalLayout } = args;
 
-  figlet(args._, {
+  figlet(args._.join(' '), {
     font,
     kerning,
     horizontalLayout,
