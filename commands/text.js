@@ -44,6 +44,11 @@ module.exports = (client, message, argString) => {
     return;
   }
 
+  if (args._.length === 0) {
+    message.reply('you need to write some text.');
+    return;
+  }
+
   const font = fontName.in(args.font);
   const { kerning, horizontalLayout, verticalLayout } = args;
   const text = args._.join(' ');
