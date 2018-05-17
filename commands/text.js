@@ -15,7 +15,7 @@ const parser = argString => minimist(argString, {
     verticalLayout: ['vertical', 'vLayout', 'vl', 'v']
   },
   default: {
-    font: 'standard',
+    font: 'Standard',
     kerning: 'default'
   },
   boolean: ['help']
@@ -31,6 +31,16 @@ const validator = args => Joi.validate(args, {
 }, {
   allowUnknown: true // ignore aliases and args._
 });
+
+// preload the font list
+const fontList = figlet.fontsSync();
+
+const getFontCaseInsensitive = (input) => {
+  const font = fontName.in(input);
+
+  // if (name.toLowerCase() === font.toLowerCase()) return name;
+  return fontList.find(name => name.toLowerCase() === font.toLowerCase());
+};
 
 module.exports = (client, message, argString) => {
   const args = parser(argString);
@@ -51,7 +61,7 @@ module.exports = (client, message, argString) => {
 
   const timer = client.logger.startTimer();
 
-  const font = fontName.in(args.font);
+  const font = getFontCaseInsensitive(args.font);
   const { kerning, horizontalLayout, verticalLayout } = args;
   const text = args._.join(' ');
 
