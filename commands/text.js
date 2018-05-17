@@ -37,9 +37,8 @@ const fontList = figlet.fontsSync();
 
 const getFontCaseInsensitive = (input) => {
   const font = fontName.in(input);
-
-  // if (name.toLowerCase() === font.toLowerCase()) return name;
-  return fontList.find(name => name.toLowerCase() === font.toLowerCase());
+  const found = fontList.find(name => name.toLowerCase() === font.toLowerCase());
+  return found || input;
 };
 
 module.exports = (client, message, argString) => {
