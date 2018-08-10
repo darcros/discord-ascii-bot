@@ -4,6 +4,9 @@ const client = new Discord.Client();
 client.config = require('./config');
 client.logger = require('./logger.js');
 
+// post bot stats on DBL
+require('./functions/dbl')(client);
+
 client.logger.info('Bot starting...');
 
 client.commands = new Discord.Collection();
