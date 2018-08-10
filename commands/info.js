@@ -29,6 +29,6 @@ module.exports = (client, message, argString) => {
   message.channel.send(`**ASCII info**
 > Uptime: ${ms(client.uptime, { long: true })}
 > Servers: ${client.guilds.size}
-> Bot invite: <https://discordapp.com/oauth2/authorize?client_id=${client.user.id}&scope=bot&permissions=523328>
+> Add me to your server: <https://discordbots.org/bot/326619566719369217>
 > Support server: <${client.config.supportServerInvite}>`);
 };

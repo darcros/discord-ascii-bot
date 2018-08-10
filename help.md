@@ -89,7 +89,7 @@ Responds with info about the bot, such as uptime, servers the bot is in and invi
     ASCII> **ASCII info**
            > Uptime: 10min
            > Servers: 69
-           > Bot invite: discordapp.com/...
+           > Add me to your server: <https://discordbots.org/bot/326619566719369217>
            > Support server: discordapp.com/...
   ```
 
