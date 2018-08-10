@@ -80,8 +80,10 @@ module.exports = (client, message, argString) => {
         .catch((err) => {
           if (err.message === 'Too big') {
             message.reply('the dimensions you specified are too big.\nThe maximum size of a Discord message is 2000 characters.');
+            timer.done('image command failed, Too big');
           } else {
             message.reply('an unknown error occurred');
+            timer.done('image command failed, error logged next');
             client.logger.error('Could not convert the URL to ascii', err);
           }
         })
