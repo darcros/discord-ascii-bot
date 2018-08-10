@@ -6,7 +6,7 @@ module.exports = (client, message) => {
   // matches messages that start with prefix OR mention
   // regExp computes to something like /^(!|<@!?123456789123456789>)/
   // FIXME: possible regExp DoS, however this stuff is controlled by the bot owner so no big deal
-  const regExp = new RegExp(`^(${client.config.prefix}|<@!?${client.user.id}>)`);
+  const regExp = new RegExp(`^(${client.config.prefix}|<@!?${client.user.id}>)`, 'i');
   const matches = regExp.exec(message.content);
 
   let noPrefix = '';
