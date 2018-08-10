@@ -48,6 +48,7 @@ module.exports = (client, message, argString) => {
       }
 
       const timer = client.logger.startTimer();
+      message.channel.startTyping();
 
       // convert image
       // using 'proxyURL' instead of 'url' so the IP of the bot doesn't leak
@@ -83,6 +84,9 @@ module.exports = (client, message, argString) => {
             message.reply('an unknown error occurred');
             client.logger.error('Could not convert the URL to ascii', err);
           }
+        })
+        .finally(() => {
+          message.channel.stopTyping();
         });
     }
   });
