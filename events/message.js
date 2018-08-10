@@ -17,10 +17,15 @@ module.exports = (client, message) => {
   } else return;
 
   const split = stringArgv(noPrefix);
-  const command = split.shift().toLowerCase();
+  const command = split.shift();
 
-  if (client.commands.has(command)) {
+  if (!command) {
+    message.reply('Try `ASCII help` for more info on how to use the bot');
+    return;
+  }
+
+  if (client.commands.has(command.toLowerCase())) {
     client.logger.debug('executing command', command);
-    client.commands.get(command)(client, message, split);
+    client.commands.get(command.toLowerCase())(client, message, split);
   }
 };
