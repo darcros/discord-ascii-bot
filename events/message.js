@@ -20,7 +20,11 @@ module.exports = (client, message) => {
   const command = split.shift();
 
   if (!command) {
-    message.reply('Try `ASCII help` for more info on how to use the bot');
+    if (message.channel.type === 'dm' && message.attachments) {
+      client.commands.get('image')(client, message, split);
+    } else {
+      message.reply('Try `ASCII help` for more info on how to use the bot');
+    }
     return;
   }
 
