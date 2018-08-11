@@ -19,6 +19,9 @@
     "type": "git",
     "url": "https://github.com/7ixi0/discord-ascii-bot.git"
   },
+  "engines": {
+    "node": ">=10.0.0"
+  },
   "dependencies": {
     "dblapi.js": "^2.2.0",
     "discord.js": "^11.3.0",
