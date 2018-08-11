@@ -83,7 +83,14 @@ module.exports = (client, message, argString) => {
             timer.done('image command failed, Too big');
           } else {
             message.reply('an unknown error occurred');
-            timer.done('image command failed, error logged next');
+            timer.done('image command failed, error logged next', {
+              url: attachment.proxyURL,
+              originalWidth: attachment.width,
+              originalHeight: attachment.height,
+              customWidth: args.width,
+              customHeight: args.height,
+              customCharset: args.charset
+            });
             client.logger.error('Could not convert the URL to ascii', err);
           }
         })
