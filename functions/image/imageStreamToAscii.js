@@ -15,8 +15,17 @@ module.exports = (stream, width, height, customChars) => new Promise((resolve, r
     .resize(width, height)
     // ignore the aspect ratio because the size passed in should be right
     .ignoreAspectRatio()
+    // make all transparent parts white
+    .background({
+      r: 255,
+      g: 255,
+      b: 255,
+      alpha: 1
+    })
+    .flatten()
     // convert image to black and white
     .toColorspace('b-w')
+    // give 8-bit int array as output
     .raw();
 
   transformer.on('error', reject);
