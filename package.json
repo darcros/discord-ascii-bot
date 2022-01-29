@@ -1,0 +1,29 @@
+{
+  "name": "discord-ascii-bot",
+  "version": "2.0.0",
+  "description": "A discord bot that creates ASCII art",
+  "private": true,
+  "main": "src/index.mjs",
+  "scripts": {
+    "start": "node .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/darcros/discord-ascii-bot.git"
+  },
+  "keywords": [
+    "ASCII",
+    "Discord",
+    "bot"
+  ],
+  "author": "Dario Crosa (darcros)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/darcros/discord-ascii-bot/issues"
+  },
+  "homepage": "https://github.com/darcros/discord-ascii-bot#readme"
+}
