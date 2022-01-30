@@ -6,7 +6,9 @@
   "main": "src/index.mjs",
   "scripts": {
     "start": "node .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "format": "prettier . --write",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "discord:register-commands": "node src/scripts/register-commands.mjs"
   },
   "engines": {
     "node": ">=16.0.0"
@@ -25,5 +27,14 @@
   "bugs": {
     "url": "https://github.com/darcros/discord-ascii-bot/issues"
   },
-  "homepage": "https://github.com/darcros/discord-ascii-bot#readme"
+  "homepage": "https://github.com/darcros/discord-ascii-bot#readme",
+  "dependencies": {
+    "@discordjs/rest": "^0.3.0",
+    "discord-api-types": "^0.26.1",
+    "discord.js": "^13.6.0",
+    "dotenv": "^14.3.2"
+  },
+  "devDependencies": {
+    "prettier": "^2.5.1"
+  }
 }
