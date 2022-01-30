@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 import { Client, Collection, Intents } from 'discord.js';
 import { loadCommands } from './commandLoader.mjs';
+import { dispath } from './interactionDispatcher.mjs';
 
 // load env variables
 dotenv.config();
@@ -17,20 +18,7 @@ client.on('ready', () => {
 });
 
 client.on('interactionCreate', async (interaction) => {
-  if (!interaction.isCommand()) return;
-
-  const command = commands.get(interaction.commandName);
-  if (!command) return;
-
-  try {
-    await command.execute(interaction);
-  } catch (error) {
-    console.error(error);
-    await interaction.reply({
-      content: 'There was an error while executing this command!',
-      ephemeral: true,
-    });
-  }
+  await dispath(interaction);
 });
 
 client.login(TOKEN);
