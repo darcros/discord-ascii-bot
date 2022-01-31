@@ -64,10 +64,12 @@ export const execute = async (interaction) => {
 
   // since we cant use choiches for the fonts we have to manually check that the user has picked a font that actually exists
   const fontOption = interaction.options.getString('font', false);
-  const font = fontsList.find(
-    (f) => f.toLowerCase() === fontOption.toLowerCase()
-  );
-  if (!font) {
+
+  const font =
+    fontOption &&
+    fontsList.find((f) => f.toLowerCase() === fontOption.toLowerCase());
+
+  if (fontOption && !font) {
     await interaction.reply({
       content:
         'That font does not exist. Please select a font from the autocomplete options.',
@@ -77,7 +79,7 @@ export const execute = async (interaction) => {
   }
 
   const result = await figlet(text, {
-    font: fontOption,
+    font,
     horizontalLayout: kerning,
   });
   const content = '```' + result + '```';
