@@ -33,6 +33,15 @@ const dispatchAutocomplete = async (interaction) => {
   }
 };
 
+const respondWithErrorMessage = async (interaction) => {
+  if (!interaction.replied) {
+    await interaction.reply({
+      content: 'There was an error while executing this command!',
+      ephemeral: true,
+    });
+  }
+};
+
 /**
  * @param {ContextMenuInteraction} interaction
  */
@@ -53,10 +62,7 @@ const dispatchContextMenuCommand = async (interaction) => {
     await command.execute(interaction);
   } catch (error) {
     console.error(error);
-    await interaction.reply({
-      content: 'There was an error while executing this command!',
-      ephemeral: true,
-    });
+    await respondWithErrorMessage(interaction);
   }
 };
 
@@ -71,10 +77,7 @@ const dispathCommand = async (interaction) => {
     await command.execute(interaction);
   } catch (error) {
     console.error(error);
-    await interaction.reply({
-      content: 'There was an error while executing this command!',
-      ephemeral: true,
-    });
+    await respondWithErrorMessage(interaction);
   }
 };
 
