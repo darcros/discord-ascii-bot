@@ -14,7 +14,9 @@ const rest = new REST({ version: '9' }).setToken(TOKEN);
     console.log('Started refreshing application (/) commands.');
 
     const commands = await loadCommands();
-    const body = commands.map((command) => command.data);
+    const body = [...commands.context, ...commands.slash].map(
+      (command) => command.data
+    );
 
     // for now guild commands only
     // TODO: add option to update global commands

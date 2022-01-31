@@ -2,18 +2,23 @@ import {
   AutocompleteInteraction,
   Collection,
   CommandInteraction,
+  ContextMenuInteraction,
 } from 'discord.js';
+import { ApplicationCommandType } from 'discord-api-types/v9';
 import { loadCommands } from './commandLoader.mjs';
 
-const commands = new Collection(
-  (await loadCommands()).map((command) => [command.data.name, command])
-);
+const buildCommandCollection = (commandList) =>
+  new Collection(commandList.map((command) => [command.data.name, command]));
+
+const commands = await loadCommands();
+const contextCommands = buildCommandCollection(commands.context);
+const slashCommands = buildCommandCollection(commands.slash);
 
 /**
  * @param {AutocompleteInteraction} interaction
  */
 const dispatchAutocomplete = async (interaction) => {
-  const command = commands.get(interaction.commandName);
+  const command = slashCommands.get(interaction.commandName);
   if (!command) return;
 
   const focusedOption = interaction.options.getFocused(true);
@@ -29,10 +34,37 @@ const dispatchAutocomplete = async (interaction) => {
 };
 
 /**
+ * @param {ContextMenuInteraction} interaction
+ */
+const dispatchContextMenuCommand = async (interaction) => {
+  const command = contextCommands.get(interaction.commandName);
+  if (!command) return;
+
+  // ensure that context type is the same in interaction and message
+  if (
+    (interaction.isUserContextMenu() &&
+      command.data.type !== ApplicationCommandType.User) ||
+    (interaction.isMessageContextMenu() &&
+      command.data.type !== ApplicationCommandType.Message)
+  )
+    return;
+
+  try {
+    await command.execute(interaction);
+  } catch (error) {
+    console.error(error);
+    await interaction.reply({
+      content: 'There was an error while executing this command!',
+      ephemeral: true,
+    });
+  }
+};
+
+/**
  * @param {CommandInteraction} interaction
  */
 const dispathCommand = async (interaction) => {
-  const command = commands.get(interaction.commandName);
+  const command = slashCommands.get(interaction.commandName);
   if (!command) return;
 
   try {
@@ -52,6 +84,10 @@ const dispathCommand = async (interaction) => {
 export const dispath = async (interaction) => {
   if (interaction.isAutocomplete()) {
     return dispatchAutocomplete(interaction);
+  }
+
+  if (interaction.isContextMenu()) {
+    return dispatchContextMenuCommand(interaction);
   }
 
   if (interaction.isCommand()) {

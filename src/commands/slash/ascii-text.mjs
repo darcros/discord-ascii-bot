@@ -1,7 +1,7 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
 import { AutocompleteInteraction, CommandInteraction } from 'discord.js';
-import { figlet, getFonts } from '../util/figlet.mjs';
-import { completeString } from '../util/autocomplete.mjs';
+import { figlet, getFonts } from '../../util/figlet.mjs';
+import { completeString } from '../../util/autocomplete.mjs';
 
 // since the fonts dont change we can cache them here
 const fontsList = await getFonts();

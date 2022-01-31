@@ -1,14 +1,21 @@
 import { readdir } from 'fs/promises';
 import { join } from 'path';
 
-const commandsDir = new URL('./commands', import.meta.url).pathname;
+const relative = (path) => new URL(path, import.meta.url).pathname;
 
-export const loadCommands = async () => {
-  const files = await readdir(commandsDir);
+const loadFolder = async (path) => {
+  const files = await readdir(path);
 
   const modules = files
     .filter((file) => file.endsWith('.mjs'))
-    .map((file) => import(join(commandsDir, file)));
+    .map((file) => import(join(path, file)));
 
   return await Promise.all(modules);
+};
+
+export const loadCommands = async () => {
+  return {
+    slash: await loadFolder(relative('./commands/slash')),
+    context: await loadFolder(relative('./commands/context')),
+  };
 };
