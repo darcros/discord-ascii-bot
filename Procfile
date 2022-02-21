@@ -1,2 +1,2 @@
-release npm run discord:register-commands:global
+release: npm run discord:register-commands:global
 worker: npm start
