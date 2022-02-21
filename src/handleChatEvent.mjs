@@ -1,7 +1,7 @@
 const MESSAGE = `Reguar chat commands for ASCII have been discontinued, please use slash commands instead.
 The transition to slash commands has been made necessary by a Discord API change that will prevent ASCII from reading message content starting from May 1 2022.`;
 
-const PREFIX = 'ASCII';
+const { PREFIX = 'ASCII' } = process.env;
 
 export const onMessage = (client, message) => {
   if (message.author.bot) return;
