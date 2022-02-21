@@ -1,30 +1,102 @@
 import dotenv from 'dotenv';
+import { Command, Option } from 'commander';
+import enquirer from 'enquirer';
 import { REST } from '@discordjs/rest';
 import { Routes } from 'discord-api-types/v9';
 import { loadCommands } from '../commandLoader.mjs';
 
-// load env variables
-dotenv.config();
-const { TOKEN, CLIENT_ID, GUILD_ID } = process.env;
+const program = new Command();
 
-const rest = new REST({ version: '9' }).setToken(TOKEN);
+program
+  .addOption(
+    new Option(
+      '--target <type>',
+      'Specify whether the commands should be registered to a specific guild or globally. When using `--target guild` also specify --guild-id.'
+    )
+      .choices(['guild', 'global'])
+      .default('guild')
+      .makeOptionMandatory(true)
+  )
+  .addOption(
+    new Option('--token <token>', 'The Discord API token.')
+      .makeOptionMandatory(true)
+      .env('TOKEN')
+  )
+  .addOption(
+    new Option(
+      '--client <id>',
+      'The ID of the application client to which the commands shall belong to.'
+    )
+      .env('CLIENT_ID')
+      .makeOptionMandatory(true)
+  )
+  .addOption(
+    new Option(
+      '--guild <id>',
+      'The ID of the guild to register the commands to. (only if `--target guild`)'
+    ).env('GUILD_ID')
+  );
+
+const updateGuild = async (commandsArr, opts, rest) => {
+  if (!opts.guild) {
+    console.error('Missing --guild option (or GUILD_ID environment variable).');
+    return;
+  }
+
+  console.info('Registering application guild commands...', {
+    client: opts.client,
+    guild: opts.guild,
+  });
+
+  await rest.put(Routes.applicationGuildCommands(opts.client, opts.guild), {
+    body: commandsArr,
+  });
+
+  console.info('Successfully registered application guild commands.');
+};
+
+const updateGlobal = async (commandsArr, opts, rest) => {
+  const response = await enquirer.prompt({
+    type: 'confirm',
+    name: 'confirmUpdate',
+    message: 'Are you sure you want to update the global commands?',
+  });
+  if (!response.confirmUpdate) {
+    console.info('Canceled.');
+    return;
+  }
+
+  console.info('Registering application commands globally...', {
+    client: opts.client,
+  });
+
+  await rest.put(Routes.applicationCommands(opts.client), {
+    body: commandsArr,
+  });
+
+  console.info('Successfully registered application commands globally.');
+};
 
 (async () => {
+  // load env variables
+  dotenv.config();
+
+  // parse options
+  program.parse();
+  const opts = program.opts();
+
+  const commandsObj = await loadCommands();
+  const commandsArr = [...commandsObj.context, ...commandsObj.slash].map(
+    (command) => command.data
+  );
+
+  const rest = new REST({ version: '9' }).setToken(opts.token);
   try {
-    console.log('Started refreshing application (/) commands.');
-
-    const commands = await loadCommands();
-    const body = [...commands.context, ...commands.slash].map(
-      (command) => command.data
-    );
-
-    // for now guild commands only
-    // TODO: add option to update global commands
-    await rest.put(Routes.applicationGuildCommands(CLIENT_ID, GUILD_ID), {
-      body,
-    });
-
-    console.log('Successfully reloaded application (/) commands.');
+    if (opts.target === 'global') {
+      updateGlobal(commandsArr, opts, rest);
+    } else {
+      updateGuild(commandsArr, opts, rest);
+    }
   } catch (error) {
     console.error(error);
   }
