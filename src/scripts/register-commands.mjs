@@ -43,10 +43,11 @@ const updateGuild = async (commandsArr, opts, rest) => {
     return;
   }
 
-  console.info('Registering application guild commands...', {
-    client: opts.client,
-    guild: opts.guild,
-  });
+  // console.info('Registering application guild commands...', {
+  //   client: opts.client,
+  //   guild: opts.guild,
+  // });
+  throw new Error('BOOM!');
 
   await rest.put(Routes.applicationGuildCommands(opts.client, opts.guild), {
     body: commandsArr,
@@ -93,11 +94,14 @@ const updateGlobal = async (commandsArr, opts, rest) => {
   const rest = new REST({ version: '9' }).setToken(opts.token);
   try {
     if (opts.target === 'global') {
-      updateGlobal(commandsArr, opts, rest);
+      await updateGlobal(commandsArr, opts, rest);
     } else {
-      updateGuild(commandsArr, opts, rest);
+      await updateGuild(commandsArr, opts, rest);
     }
   } catch (error) {
     console.error(error);
+
+    // exit with non-zero code to signal failure
+    process.exit(1);
   }
 })();
