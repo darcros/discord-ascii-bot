@@ -20,7 +20,6 @@ const calculateSize = (
   width,
   height,
   maxChars = 2000,
-  //  0.375
   heightMultiplier = 0.4 // TODO: calculate an accurate value, this value was just eyeballed
 ) => {
   const w = width;
