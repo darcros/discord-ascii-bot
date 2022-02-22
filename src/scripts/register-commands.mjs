@@ -43,11 +43,10 @@ const updateGuild = async (commandsArr, opts, rest) => {
     return;
   }
 
-  // console.info('Registering application guild commands...', {
-  //   client: opts.client,
-  //   guild: opts.guild,
-  // });
-  throw new Error('BOOM!');
+  console.info('Registering application guild commands...', {
+    client: opts.client,
+    guild: opts.guild,
+  });
 
   await rest.put(Routes.applicationGuildCommands(opts.client, opts.guild), {
     body: commandsArr,
