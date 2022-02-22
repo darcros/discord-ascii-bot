@@ -56,14 +56,16 @@ const updateGuild = async (commandsArr, opts, rest) => {
 };
 
 const updateGlobal = async (commandsArr, opts, rest) => {
-  const response = await enquirer.prompt({
-    type: 'confirm',
-    name: 'confirmUpdate',
-    message: 'Are you sure you want to update the global commands?',
-  });
-  if (!response.confirmUpdate) {
-    console.info('Canceled.');
-    return;
+  if (process.env.NODE_ENV?.toLowerCase() !== 'production') {
+    const response = await enquirer.prompt({
+      type: 'confirm',
+      name: 'confirmUpdate',
+      message: 'Are you sure you want to update the global commands?',
+    });
+    if (!response.confirmUpdate) {
+      console.info('Canceled.');
+      return;
+    }
   }
 
   console.info('Registering application commands globally...', {
