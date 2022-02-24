@@ -15,7 +15,8 @@ export const data = new ContextMenuCommandBuilder()
  */
 export const execute = async (interaction) => {
   const imageAttachments = interaction.targetMessage.attachments.filter(
-    (attachment) => attachment.contentType.startsWith('image')
+    // NOTE: attachment.contentType seems to be `null` for images sent a long time ago, but it shouldn't be a problem for newly sent images
+    (attachment) => attachment.contentType?.startsWith('image')
   );
   if (imageAttachments.size !== 1) {
     await interaction.reply({
@@ -40,7 +41,9 @@ export const execute = async (interaction) => {
     attachment.proxyURL,
     attachment.width,
     attachment.height,
-    // account for the maximum message length and also the ``` characters that need to be appended and prepended to the message
+    // 2000 is the maximus size allowd by discord
+    // -6 is to make space for the ``` before and after the message
+    // FIXME: does not take into account \n characters
     2000 - 6
   );
   const content = '```' + result + '```';
