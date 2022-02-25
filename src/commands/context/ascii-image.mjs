@@ -39,8 +39,6 @@ export const execute = async (interaction) => {
 
   const result = await urlToAscii(
     attachment.proxyURL,
-    attachment.width,
-    attachment.height,
     // 2000 is the maximus size allowd by discord
     // -6 is to make space for the ``` before and after the message
     2000 - 6
