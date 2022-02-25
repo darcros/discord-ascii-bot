@@ -8,28 +8,32 @@ const chars = '%&#MHGw*+-. ';
 // const chars = 'BS#&@$%*!:. ';
 
 /**
- * Calculate the maximum rectangle that has an area less that maxChars and the same aspect ratio (width/height) as the image
+ * Calculate the maximum rectangle that has a surface area <= `maxSurface` and the same aspect ratio
  *
  * @param {number} width the image width
  * @param {number} height the image heigth
- * @param {number} maxChars maximum number of chars allowed in Discord message
- * @param {number} heightMultiplier allows to scale the images height so it doesn't look stretched when after being converted to ASCII characters.
+ * @param {number} maxSurface maximum surface area of the output rectangle
  * @returns
  */
-const calculateSize = (
-  width,
-  height,
-  maxChars = 2000,
-  heightMultiplier = 0.4 // TODO: calculate an accurate value, this value was just eyeballed
-) => {
-  const w = width;
-  const h = height * heightMultiplier;
+const calculateSize = (width, height, maxSurface = 2000) => {
+  const imageArea = width * height;
 
-  const imageArea = w * h;
-  const scaleFactor = Math.sqrt(maxChars / imageArea);
+  /*
+  We want to keep the aspect ratio of the image, this means that we must scale width and height by the same factor:
+  (1) newW = scaleFactor * width
+  (2) newH = scaleFactor * height
 
-  const newW = Math.floor(scaleFactor * w);
-  const newH = Math.floor(scaleFactor * h);
+  We also want the are of the new image to be <= than maxSurface (we add 1 to width to account for the \n characters at the end of the lines)
+  (3) (newW + 1) * newH <= maxSurface
+
+  We substitute (1) and (2) into (3) and solve for `scaleFactor` to find the formula below.
+  */
+  const scaleFactor =
+    (-height + Math.sqrt(height * height + 4 * imageArea * maxSurface)) /
+    (2 * imageArea);
+
+  const newW = Math.floor(scaleFactor * width);
+  const newH = Math.floor(scaleFactor * height);
   return [newW, newH];
 };
 
@@ -75,12 +79,15 @@ function groupLines(lineLength) {
 export const urlToAscii = async (
   url,
   originalWidth,
-  origianalHeight,
+  originalHeight,
   maxChars
 ) => {
   const [width, height] = calculateSize(
     originalWidth,
-    origianalHeight,
+
+    // Since pixels are square but character are not, we must squish the image so that it doesn't look stretched after being converted to ASCII
+    // TODO: calculate an accurate value, this value was just eyeballed
+    originalHeight * 0.4,
     maxChars
   );
 

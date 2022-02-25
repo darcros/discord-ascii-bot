@@ -43,7 +43,6 @@ export const execute = async (interaction) => {
     attachment.height,
     // 2000 is the maximus size allowd by discord
     // -6 is to make space for the ``` before and after the message
-    // FIXME: does not take into account \n characters
     2000 - 6
   );
   const content = '```' + result + '```';
