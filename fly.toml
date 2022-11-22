@@ -1,0 +1,13 @@
+# fly.toml file generated for discord-ascii-bot on 2022-11-22T22:39:51+01:00
+
+app = "discord-ascii-bot"
+kill_signal = "SIGINT"
+kill_timeout = 5
+processes = []
+
+[env]
+  PORT = "8080"
+
+[experimental]
+  allowed_public_ports = []
+  auto_rollback = true
