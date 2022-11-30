@@ -78,6 +78,8 @@ export const execute = async (interaction) => {
     return;
   }
 
+  console.debug('ascii text', { text, kerning, font });
+
   const result = await figlet(text, {
     font,
     horizontalLayout: kerning,

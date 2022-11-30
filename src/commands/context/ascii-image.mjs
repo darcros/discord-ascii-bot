@@ -37,6 +37,8 @@ export const execute = async (interaction) => {
 
   await interaction.deferReply();
 
+  console.debug('ascii image', { url: attachment.proxyURL });
+
   const result = await urlToAscii(
     attachment.proxyURL,
     // 2000 is the maximus size allowd by discord
